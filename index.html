@@ -1,0 +1,176 @@
+
+<!DOCTYPE html>
+<html lang="lt">
+<head>
+  <meta charset="UTF-8">
+  <title>Projekto skaičiuoklė</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; }
+    table { border-collapse: collapse; width: 100%; margin-bottom: 20px; }
+    th, td { border: 1px solid #ccc; padding: 6px; text-align: center; }
+    th { background: #f0f0f0; }
+    input { width: 100px; text-align: right; }
+    .label { text-align: left; }
+  </style>
+</head>
+<body>
+  <h2>Projekto sąnaudų ir pajamų skaičiuoklė</h2>
+  <table id="calcTable">
+    <thead>
+      <tr>
+        <th>Etapas</th>
+        <th>Mato vnt.</th>
+        <th>Scenarijus 1</th>
+        <th>Scenarijus 2</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td class="label">Sklypo kaina</td><td>EUR</td>
+        <td><input type="number" id="sklypo_kaina1" value="100000"></td>
+        <td><input type="number" id="sklypo_kaina2" value="120000"></td></tr>
+      <tr><td class="label">Sklypo plotas</td><td>m²</td>
+        <td><input type="number" id="sklypo_plotas1" value="1000"></td>
+        <td><input type="number" id="sklypo_plotas2" value="1000"></td></tr>
+      <tr><td class="label">Statinių plotas</td><td>m²</td>
+        <td><input type="number" id="statiniu_plotas1" value="5000"></td>
+        <td><input type="number" id="statiniu_plotas2" value="5500"></td></tr>
+      <tr><td class="label">Projektavimo darbai</td><td>EUR/m²</td>
+        <td><input type="number" id="proj_darbai1" value="50"></td>
+        <td><input type="number" id="proj_darbai2" value="55"></td></tr>
+      <tr><td class="label">Statybos darbai</td><td>EUR/m²</td>
+        <td><input type="number" id="stat_darbai1" value="600"></td>
+        <td><input type="number" id="stat_darbai2" value="620"></td></tr>
+      <tr><td class="label">Statybos darbų vertė, viso</td><td>EUR</td>
+        <td id="stat_darbai_viso1"></td><td id="stat_darbai_viso2"></td></tr>
+      <tr><td class="label">Projekto valdymas</td><td>EUR/m²</td>
+        <td><input type="number" id="valdymas1" value="40"></td>
+        <td><input type="number" id="valdymas2" value="42"></td></tr>
+      <tr><td class="label">Statybų priežiūra</td><td>EUR/m²</td>
+        <td><input type="number" id="prieziura1" value="30"></td>
+        <td><input type="number" id="prieziura2" value="32"></td></tr>
+      <tr><td class="label">Ekspertizės</td><td>EUR</td>
+        <td><input type="number" id="ekspertizes1" value="10000"></td>
+        <td><input type="number" id="ekspertizes2" value="10000"></td></tr>
+      <tr><td class="label">Architekto priežiūra</td><td>EUR/m²</td>
+        <td><input type="number" id="arch_prieziura1" value="10"></td>
+        <td><input type="number" id="arch_prieziura2" value="12"></td></tr>
+      <tr><td class="label">Sklypo tvarkymas, keliai, gerbuvis</td><td>EUR/m²</td>
+        <td><input type="number" id="tvarkymas1" value="20"></td>
+        <td><input type="number" id="tvarkymas2" value="25"></td></tr>
+      <tr><td class="label">Sklypo tvarkymas, viso</td><td>EUR</td>
+        <td id="tvarkymas_viso1"></td><td id="tvarkymas_viso2"></td></tr>
+      <tr><td class="label">Statybos pabaiga, tvarkymas, registravimas</td><td>EUR/m²</td>
+        <td><input type="number" id="pabaiga1" value="15"></td>
+        <td><input type="number" id="pabaiga2" value="16"></td></tr>
+      <tr><td class="label">Statybos pabaiga, viso</td><td>EUR</td>
+        <td id="pabaiga_viso1"></td><td id="pabaiga_viso2"></td></tr>
+      <tr><td class="label"><b>Viso statybos kaina</b></td><td>EUR</td>
+        <td id="statybu_kaina1"></td><td id="statybu_kaina2"></td></tr>
+      <tr><td class="label"><b>Viso projekavimo ir valdymo kaina</b></td><td>EUR</td>
+        <td id="projekto_valdymo1"></td><td id="projekto_valdymo2"></td></tr>
+      <tr><td class="label"><b>Viso projekto kaina (be PVM)</b></td><td>EUR</td>
+        <td id="viso_projekto1"></td><td id="viso_projekto2"></td></tr>
+      <tr><td class="label">PVM tarifas</td><td>%</td>
+        <td><input type="number" id="pvm1" value="21"></td>
+        <td><input type="number" id="pvm2" value="21"></td></tr>
+      <tr><td class="label">PVM suma</td><td>EUR</td>
+        <td id="pvm_suma1"></td><td id="pvm_suma2"></td></tr>
+      <tr><td class="label"><b>Galutinė projekto kaina (su PVM)</b></td><td>EUR</td>
+        <td id="viso_su_pvm1"></td><td id="viso_su_pvm2"></td></tr>
+      <tr><td class="label">Mėnesinė nuoma</td><td>EUR</td>
+        <td><input type="number" id="nuoma1" value="80000"></td>
+        <td><input type="number" id="nuoma2" value="85000"></td></tr>
+      <tr><td class="label">Nuomos laikotarpis</td><td>mėn.</td>
+        <td><input type="number" id="nuomos_laikotarpis1" value="96"></td>
+        <td><input type="number" id="nuomos_laikotarpis2" value="96"></td></tr>
+      <tr><td class="label">Diskonto norma (WACC)</td><td>%</td>
+        <td><input type="number" id="wacc1" value="8"></td>
+        <td><input type="number" id="wacc2" value="8"></td></tr>
+      <tr><td class="label"><b>IRR</b></td><td>%</td>
+        <td id="irr1"></td><td id="irr2"></td></tr>
+      <tr><td class="label"><b>NPV</b></td><td>EUR</td>
+        <td id="npv1"></td><td id="npv2"></td></tr>
+    </tbody>
+  </table>
+
+<script>
+function computeScenario(idx) {
+  let sklypo_kaina = parseFloat(document.getElementById("sklypo_kaina"+idx).value)||0;
+  let sklypo_plotas = parseFloat(document.getElementById("sklypo_plotas"+idx).value)||0;
+  let statiniu_plotas = parseFloat(document.getElementById("statiniu_plotas"+idx).value)||0;
+  let proj_darbai = parseFloat(document.getElementById("proj_darbai"+idx).value)||0;
+  let stat_darbai = parseFloat(document.getElementById("stat_darbai"+idx).value)||0;
+  let valdymas = parseFloat(document.getElementById("valdymas"+idx).value)||0;
+  let prieziura = parseFloat(document.getElementById("prieziura"+idx).value)||0;
+  let ekspertizes = parseFloat(document.getElementById("ekspertizes"+idx).value)||0;
+  let arch = parseFloat(document.getElementById("arch_prieziura"+idx).value)||0;
+  let tvarkymas = parseFloat(document.getElementById("tvarkymas"+idx).value)||0;
+  let pabaiga = parseFloat(document.getElementById("pabaiga"+idx).value)||0;
+
+  let stat_darbai_viso = statiniu_plotas * stat_darbai;
+  document.getElementById("stat_darbai_viso"+idx).innerText = stat_darbai_viso.toFixed(0);
+
+  let tvarkymas_viso = sklypo_plotas * tvarkymas;
+  document.getElementById("tvarkymas_viso"+idx).innerText = tvarkymas_viso.toFixed(0);
+
+  let pabaiga_viso = statiniu_plotas * pabaiga;
+  document.getElementById("pabaiga_viso"+idx).innerText = pabaiga_viso.toFixed(0);
+
+  let statybu_kaina = stat_darbai_viso + tvarkymas_viso + pabaiga_viso + ekspertizes;
+  document.getElementById("statybu_kaina"+idx).innerText = statybu_kaina.toFixed(0);
+
+  let projekto_valdymo = statiniu_plotas*(proj_darbai+valdymas+prieziura+arch);
+  document.getElementById("projekto_valdymo"+idx).innerText = projekto_valdymo.toFixed(0);
+
+  let viso_projekto = statybu_kaina + projekto_valdymo + sklypo_kaina;
+  document.getElementById("viso_projekto"+idx).innerText = viso_projekto.toFixed(0);
+
+  let pvm = parseFloat(document.getElementById("pvm"+idx).value)||0;
+  let pvm_suma = viso_projekto * pvm/100.0;
+  document.getElementById("pvm_suma"+idx).innerText = pvm_suma.toFixed(0);
+  let viso_su_pvm = viso_projekto + pvm_suma;
+  document.getElementById("viso_su_pvm"+idx).innerText = viso_su_pvm.toFixed(0);
+
+  // Finansai
+  let nuoma = parseFloat(document.getElementById("nuoma"+idx).value)||0;
+  let laikotarpis = parseFloat(document.getElementById("nuomos_laikotarpis"+idx).value)||0;
+  let wacc = parseFloat(document.getElementById("wacc"+idx).value)||0;
+
+  let investicija = viso_projekto;
+  let r_men = wacc/100/12;
+  let npv = -investicija;
+  for(let t=1; t<=laikotarpis; t++){
+    npv += nuoma/Math.pow(1+r_men, t);
+  }
+  document.getElementById("npv"+idx).innerText = npv.toFixed(0);
+
+  // IRR iteratyviai
+  function irr(invest, cf, n){
+    let guess=0.1; // 10%
+    for(let i=0;i<1000;i++){
+      let npv= -invest;
+      for(let t=1;t<=n;t++){ npv += cf/Math.pow(1+guess/12, t); }
+      let deriv=0;
+      for(let t=1;t<=n;t++){ deriv += -t*cf/12*Math.pow(1+guess/12,-(t+1)); }
+      let newGuess=guess - npv/deriv;
+      if(Math.abs(newGuess-guess)<1e-7) return newGuess*100;
+      guess=newGuess;
+    }
+    return guess*100;
+  }
+  let irrVal = irr(investicija, nuoma, laikotarpis);
+  document.getElementById("irr"+idx).innerText = irrVal.toFixed(2);
+}
+
+function recalc(){
+  computeScenario(1);
+  computeScenario(2);
+}
+
+document.querySelectorAll("input").forEach(inp=>{
+  inp.addEventListener("input", recalc);
+});
+recalc();
+</script>
+</body>
+</html>
